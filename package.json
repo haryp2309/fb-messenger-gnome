@@ -1,0 +1,14 @@
+{
+  "name": "modern-spotify-electron",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^32.0.1"
+  }
+}
