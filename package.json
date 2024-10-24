@@ -6,9 +6,11 @@
   "license": "MIT",
   "description": "",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist:linux": "electron-builder --linux"
   },
   "devDependencies": {
     "electron": "^32.0.1"
-  }
+  },
+  "desktopName": "com.haryp.MessengerGnome"
 }
