@@ -1,0 +1,54 @@
+app-id: com.haryp.MessengerGnome
+runtime: org.freedesktop.Platform
+runtime-version: "24.08"
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: "24.08"
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node20
+command: run.sh
+separate-locales: false
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --share=network
+build-options:
+  append-path: /usr/lib/sdk/node20/bin
+  env:
+    NPM_CONFIG_LOGLEVEL: info
+modules:
+  - name: messenger-gnome-app
+    buildsystem: simple
+    build-options:
+      env:
+        XDG_CACHE_HOME: /run/build/messenger-gnome-app/flatpak-node/cache
+        npm_config_cache: /run/build/messenger-gnome-app/flatpak-node/npm-cache
+        npm_config_offline: "true"
+    build-commands:
+      # Install npm dependencies
+      - npm install --offline
+      # - ls ../flatpak-node/
+      # - exit 1
+      # Build the app; in this example the `dist` script
+      # in package.json runs electron-builder
+      # . ../flatpak-node/electron-builder-arch-args.sh
+      - npm run dist:linux
+      # Bundle app and dependencies
+      - cp -a dist/linux*unpacked /app/main
+      # - ls /app/main
+      # - exit 1
+      # Install app wrapper
+      - install -Dm755 -t /app/bin/ ../run.sh
+    subdir: main
+    sources:
+      - type: archive
+        url: https://github.com/haryp2309/fb-messenger-gnome/archive/refs/heads/main.zip
+        dest: main
+        sha1: b8711359216ef25e3697edc0e279004c13149760
+      - generated-sources.json
+      # Wrapper to launch the app
+      - type: script
+        dest-filename: run.sh
+        commands:
+          - zypak-wrapper.sh /app/main/messenger-gnome-app --enable-features=UseOzonePlatform --ozone-platform=wayland "$@"
