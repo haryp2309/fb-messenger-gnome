@@ -7,7 +7,7 @@
   "description": "",
   "scripts": {
     "start": "electron .",
-    "dist:linux": "electron-builder --linux"
+    "dist:linux": "electron-builder --linux --dir"
   },
   "devDependencies": {
     "electron": "^32.0.1",
