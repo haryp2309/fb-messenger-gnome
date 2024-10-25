@@ -1,5 +1,6 @@
 {
   "name": "messenger-gnome-app",
+  "productName": "Messenger",
   "version": "1.0.0",
   "main": "main.js",
   "author": "",
