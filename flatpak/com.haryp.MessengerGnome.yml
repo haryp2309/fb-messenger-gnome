@@ -26,19 +26,9 @@ modules:
         npm_config_cache: /run/build/messenger-gnome-app/flatpak-node/npm-cache
         npm_config_offline: "true"
     build-commands:
-      # Install npm dependencies
       - npm install --offline
-      # - ls ../flatpak-node/
-      # - exit 1
-      # Build the app; in this example the `dist` script
-      # in package.json runs electron-builder
-      # . ../flatpak-node/electron-builder-arch-args.sh
       - npm run dist:linux
-      # Bundle app and dependencies
       - cp -a dist/linux*unpacked /app/main
-      # - ls /app/main
-      # - exit 1
-      # Install app wrapper
       - install -Dm755 -t /app/bin/ ../run.sh
     subdir: main
     sources:
