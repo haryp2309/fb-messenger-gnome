@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Messenger
+GenericName=IM Client
+Comment=Unofficial Facebook Messenger app with Gnome styling
+Icon=com.haryp.MessengerGnome
+TryExec=run.sh
+Exec=run.sh %U
+StartupWMClass=run.sh
+Terminal=false
+Categories=GTK;InstantMessaging;Network;
+StartupNotify=true

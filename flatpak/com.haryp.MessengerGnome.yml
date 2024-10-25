@@ -29,15 +29,17 @@ modules:
       - npm install --offline
       - npm run dist:linux
       - cp -a dist/linux*unpacked /app/main
+      - install -Dm644 ../${FLATPAK_ID}.desktop /app/share/applications/${FLATPAK_ID}.desktop
       - install -Dm755 -t /app/bin/ ../run.sh
     subdir: main
     sources:
-      - type: archive
-        url: https://github.com/haryp2309/fb-messenger-gnome/archive/8c23d9caa1c064af99d57c4998ddd787ca0d1615.zip
+      - type: git
+        url: https://github.com/haryp2309/fb-messenger-gnome.git
+        commit: 8fa07b38c014ba7fc4229cecaa2c28cc97249b5d
         dest: main
-        sha256: 0987df2814c6f4a62d951dafb3bae6218e94d60f15050f5f966e670afbdb2871
       - generated-sources.json
-      # Wrapper to launch the app
+      - type: file
+        path: com.haryp.MessengerGnome.desktop
       - type: script
         dest-filename: run.sh
         commands:
