@@ -4,6 +4,7 @@ on:
       - main
     paths:
       - flatpak/**
+  workflow_dispatch:
 
 name: CI
 jobs:
