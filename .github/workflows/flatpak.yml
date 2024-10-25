@@ -34,16 +34,20 @@ jobs:
         with:
           platforms: arm64
       - name: Find version
-        run: echo "RELEASE_TAG=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+        run: |
+          dnf -y install jq
+          echo "RELEASE_TAG=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+      - name: Set output filename
+        run: echo "ARTIFACT_FILENAME=MessengerGnome-${{ matrix.arch }}-${{ env.RELEASE_TAG }}.flatpak" >> $GITHUB_ENV
       - name: Build flatpak
         run: |
           cd flatpak
           /bin/env flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
           /bin/env flatpak-builder build/ com.haryp.MessengerGnome.yml --install-deps-from=flathub --arch=${{ matrix.arch }}
           /bin/env flatpak build-export export build
-          /bin/env flatpak build-bundle --arch=${{ matrix.arch }} export MessengerGnome-${{ matrix.arch }}.flatpak com.haryp.MessengerGnome
+          /bin/env flatpak build-bundle --arch=${{ matrix.arch }} export ${{ env.ARTIFACT_FILENAME }} com.haryp.MessengerGnome
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "flatpak/MessengerGnome-${{ matrix.arch }}.flatpak"
+          artifacts: "flatpak/${{ env.ARTIFACT_FILENAME }}"
           tag: ${{ env.RELEASE_TAG }}
           allowUpdates: true
