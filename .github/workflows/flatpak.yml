@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x86_64] #[x86_64, aarch64]
+        arch: [x86_64, aarch64]
         # cache: [use-cache, no-cache]
         # restore: [cache-restored, no-cache-restored]
         # exclude:
@@ -43,9 +43,9 @@ jobs:
         run: |
           cd flatpak
           /bin/env flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-          /bin/env flatpak-builder build/ com.haryp.MessengerGnome.yml --install-deps-from=flathub
+          /bin/env flatpak-builder build/ com.haryp.MessengerGnome.yml --install-deps-from=flathub --arch=${{ matrix.arch }}
           /bin/env flatpak build-export export build
-          /bin/env flatpak build-bundle export MessengerGnome.flatpak com.haryp.MessengerGnome
+          /bin/env flatpak build-bundle --arch=${{ matrix.arch }} export MessengerGnome-${{ matrix.arch }}.flatpak com.haryp.MessengerGnome
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "flatpak/MessengerGnome.flatpak"
