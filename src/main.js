@@ -33,11 +33,7 @@ function createWindow() {
   );
   view1.setBounds({ x: 0, y: 0, width: defaultWidth, height: titlebarHeight });
 
-  const view2 = new WebContentsView({
-    webPreferences: {
-      preload: path.join(__dirname, "content/preload.js"),
-    },
-  });
+  const view2 = new WebContentsView();
   win.contentView.addChildView(view2);
   view2.webContents.loadURL("https://messenger.com/");
   view2.setBounds({
@@ -57,10 +53,6 @@ function createWindow() {
       width,
       height: height - titlebarHeight,
     });
-  });
-
-  globalShortcut.register("CommandOrControl+K", () => {
-    view2.webContents.send("ctrl-k");
   });
 }
 
