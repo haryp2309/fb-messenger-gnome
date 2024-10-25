@@ -15,6 +15,8 @@ function createWindow() {
   const win = new BaseWindow({
     width: defaultWidth,
     height: defaultHeight,
+    minHeight: 300,
+    minWidth: 300,
     frame: false,
     icon: path.join(__dirname, "logo-light.png"),
   });
