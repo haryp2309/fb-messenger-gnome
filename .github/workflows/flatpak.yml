@@ -6,7 +6,7 @@ on:
       - flatpak/**
   workflow_dispatch:
 
-name: CI
+name: Flatpak Build and Release
 jobs:
   flatpak-builder:
     name: Flatpak Builder
