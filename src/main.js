@@ -7,6 +7,8 @@ const {
 } = require("electron");
 const path = require("node:path");
 
+const _relativeDirname = "src";
+
 function createWindow() {
   const defaultWidth = 1000;
   const defaultHeight = 800;
@@ -18,21 +20,22 @@ function createWindow() {
     minHeight: 300,
     minWidth: 300,
     frame: false,
-    icon: path.join(__dirname, "logo-light.png"),
   });
 
   const view1 = new WebContentsView({
     webPreferences: {
-      preload: path.join(__dirname, "titleBarPreload.js"),
+      preload: path.join(__dirname, "titlebar/preload.js"),
     },
   });
   win.contentView.addChildView(view1);
-  view1.webContents.loadFile("index.html");
+  view1.webContents.loadFile(
+    path.join(_relativeDirname, "titlebar/index.html"),
+  );
   view1.setBounds({ x: 0, y: 0, width: defaultWidth, height: titlebarHeight });
 
   const view2 = new WebContentsView({
     webPreferences: {
-      preload: path.join(__dirname, "mainPreload.js"),
+      preload: path.join(__dirname, "content/preload.js"),
     },
   });
   win.contentView.addChildView(view2);
