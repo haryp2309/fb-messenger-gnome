@@ -1,0 +1,59 @@
+on:
+  push:
+  pull_request:
+
+name: CI
+jobs:
+  flatpak-builder:
+    name: Flatpak Builder
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:latest
+      options: --privileged
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x86_64] #[x86_64, aarch64]
+        # cache: [use-cache, no-cache]
+        # restore: [cache-restored, no-cache-restored]
+        # exclude:
+        #   - arch: aarch64
+        #     cache: no-cache
+        #   - arch: aarch64
+        #     restore: no-cache-restored
+        #   - cache: no-cache
+        #     restore: cache-restored
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Flatpak Builder and Flatpak
+        run: |
+          dnf -y install flatpak-builder flatpak
+      - name: Install QEMU deps
+        if: ${{ matrix.arch != 'x86_64' }}
+        run: |
+          dnf -y install docker
+      - name: Set up QEMU
+        if: ${{ matrix.arch != 'x86_64' }}
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: arm64
+      - name: Build flatpak
+        run: |
+          cd flatpak
+          /bin/env flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          /bin/env flatpak-builder build/ com.haryp.MessengerGnome.yml --install-deps-from=flathub
+          /bin/env flatpak build-export export build
+          /bin/env flatpak build-bundle export MessengerGnome.flatpak com.haryp.MessengerGnome
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "flatpak/MessengerGnome.flatpak"
+
+      # - uses: ./flatpak-builder
+      #   with:
+      #     bundle: com.haryp.MessengerGnome.Devel-${{ matrix.cache }}-${{ matrix.restore }}.flatpak
+      #     manifest-path: ./flatpak/com.haryp.MessengerGnome.yaml
+      #     cache: ${{ matrix.cache == 'use-cache' }}
+      #     restore-cache: ${{ matrix.restore == 'cache-restored' }}
+      #     cache-key: flatpak-builder-${{ github.sha }}-${{ matrix.restore }}
+      #     arch: ${{ matrix.arch }}
+      #     verbose: true

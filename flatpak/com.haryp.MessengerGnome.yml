@@ -43,9 +43,9 @@ modules:
     subdir: main
     sources:
       - type: archive
-        url: https://github.com/haryp2309/fb-messenger-gnome/archive/refs/heads/main.zip
+        url: https://github.com/haryp2309/fb-messenger-gnome/archive/8c23d9caa1c064af99d57c4998ddd787ca0d1615.zip
         dest: main
-        sha1: b8711359216ef25e3697edc0e279004c13149760
+        sha256: 7a99ce3e577df187ad26a036fc72daa9e4983a2f65d46d3bbd1d6821cee7e089
       - generated-sources.json
       # Wrapper to launch the app
       - type: script
