@@ -50,6 +50,7 @@ jobs:
         with:
           artifacts: "flatpak/MessengerGnome.flatpak"
           tag: latest
+          allowUpdates: true
 
       # - uses: ./flatpak-builder
       #   with:
