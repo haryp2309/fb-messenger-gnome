@@ -48,7 +48,7 @@ jobs:
           /bin/env flatpak build-bundle --arch=${{ matrix.arch }} export MessengerGnome-${{ matrix.arch }}.flatpak com.haryp.MessengerGnome
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "flatpak/MessengerGnome.flatpak"
+          artifacts: "flatpak/MessengerGnome-${{ matrix.arch }}.flatpak"
           tag: latest
           allowUpdates: true
 
