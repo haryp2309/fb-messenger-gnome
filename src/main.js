@@ -32,7 +32,9 @@ const createWindow = () => {
   });
 
   if (process.env.TOGGLE_SHADOW_WORKAROUND === "1") {
-    win.webContents.send("toggleShadow");
+    setTimeout(() => {
+      win.webContents.send("toggleShadow");
+    }, 1000);
   }
 };
 
