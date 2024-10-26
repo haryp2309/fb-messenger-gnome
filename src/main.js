@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, globalShortcut } = require("electron");
 const path = require("node:path");
 
 const _relativeDirname = "src";
@@ -24,6 +24,10 @@ const createWindow = () => {
 
   win.on("unmaximize", (e) => {
     win.webContents.send("unmaximize");
+  });
+
+  globalShortcut.register("CommandOrControl+k", () => {
+    win.webContents.send("toggleShadow");
   });
 };
 
