@@ -45,22 +45,13 @@ body {
 
 .content {
     width: 100%;
-    height: calc(100vh - var(--corner-radius) - 46px);
+    height: calc(100vh - 46px);
 }
 
 .contentContainer {
     background-color: var(--bg);
-}
-
-.footer {
-    width: 100%;
-    height: var(--corner-radius);
-    display: flex;
-    align-items: center;
-    background-color: var(--bg);
-    cursor: pointer;
     border-radius: 0 0 var(--corner-radius) var(--corner-radius);
-    -webkit-app-region: drag;
+    overflow: hidden;
 }
 
 .appname {
