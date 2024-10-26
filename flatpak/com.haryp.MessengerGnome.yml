@@ -36,7 +36,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/haryp2309/fb-messenger-gnome.git
-        commit: 41fe341c4f6933feb7e8c701cc4d5d1e2544105c
+        commit: da47fb0a05f7f49116b3e4edaf8865089e0da657
         dest: main
       - generated-sources.json
       - type: file
