@@ -13,6 +13,7 @@ function createWindow() {
   const defaultWidth = 1000;
   const defaultHeight = 800;
   const titlebarHeight = 46;
+  const footerHeight = 12;
 
   const win = new BaseWindow({
     width: defaultWidth,
@@ -20,39 +21,56 @@ function createWindow() {
     minHeight: 300,
     minWidth: 300,
     frame: false,
+    transparent: true,
   });
 
-  const view1 = new WebContentsView({
+  const titlebarView = new WebContentsView({
     webPreferences: {
       preload: path.join(__dirname, "titlebar/preload.js"),
+      transparent: true,
     },
   });
-  win.contentView.addChildView(view1);
-  view1.webContents.loadFile(
+  win.contentView.addChildView(titlebarView);
+  titlebarView.webContents.loadFile(
     path.join(_relativeDirname, "titlebar/index.html"),
   );
-  view1.setBounds({ x: 0, y: 0, width: defaultWidth, height: titlebarHeight });
 
-  const view2 = new WebContentsView();
-  win.contentView.addChildView(view2);
-  view2.webContents.loadURL("https://messenger.com/");
-  view2.setBounds({
-    x: 0,
-    y: titlebarHeight,
-    width: defaultWidth,
-    height: defaultHeight - titlebarHeight,
+  const contentView = new WebContentsView();
+  win.contentView.addChildView(contentView);
+  contentView.webContents.loadURL("https://messenger.com/");
+
+  const footerView = new WebContentsView({
+    webPreferences: {
+      transparent: true,
+    },
   });
+  win.contentView.addChildView(footerView);
+  footerView.webContents.loadFile(
+    path.join(_relativeDirname, "footer/index.html"),
+  );
+
+  const updateBounds = (width, height) => {
+    titlebarView.setBounds({ x: 0, y: 0, width, height: titlebarHeight });
+    contentView.setBounds({
+      x: 0,
+      y: titlebarHeight,
+      width,
+      height: height - titlebarHeight - footerHeight,
+    });
+    footerView.setBounds({
+      x: 0,
+      y: height - footerHeight,
+      width: width,
+      height: footerHeight,
+    });
+  };
+
+  updateBounds(defaultWidth, defaultHeight);
 
   win.on("resize", () => {
     const [width, height] = win.getSize();
 
-    view1.setBounds({ x: 0, y: 0, width, height: titlebarHeight });
-    view2.setBounds({
-      x: 0,
-      y: titlebarHeight,
-      width,
-      height: height - titlebarHeight,
-    });
+    updateBounds(width, height);
   });
 }
 
