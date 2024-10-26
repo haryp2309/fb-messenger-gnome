@@ -27,6 +27,7 @@ const createWindow = () => {
   });
 
   globalShortcut.register("CommandOrControl+k", () => {
+    console.log("TOGGLE SHADOW WORKAROUND");
     win.webContents.send("toggleShadow");
   });
 };
