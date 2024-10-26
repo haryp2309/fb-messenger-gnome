@@ -30,6 +30,10 @@ const createWindow = () => {
     console.log("TOGGLE SHADOW WORKAROUND");
     win.webContents.send("toggleShadow");
   });
+
+  if (process.env.TOGGLE_SHADOW_WORKAROUND === "1") {
+    win.webContents.send("toggleShadow");
+  }
 };
 
 app.whenReady().then(() => {
