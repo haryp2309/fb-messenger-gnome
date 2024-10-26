@@ -17,6 +17,14 @@ const createWindow = () => {
   });
 
   win.loadFile(path.join(_relativeDirname, "index.html"));
+
+  win.on("maximize", (e) => {
+    win.webContents.send("maximize");
+  });
+
+  win.on("unmaximize", (e) => {
+    win.webContents.send("unmaximize");
+  });
 };
 
 app.whenReady().then(() => {

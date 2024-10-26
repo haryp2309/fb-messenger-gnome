@@ -32,6 +32,12 @@ body {
     margin: 0;
 }
 
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: 1;
+}
+
 .titlebar {
     width: 100%;
     height: 46px;
@@ -39,19 +45,31 @@ body {
     align-items: center;
     background-color: var(--bg);
     cursor: pointer;
-    border-radius: var(--corner-radius) var(--corner-radius) 0 0;
     -webkit-app-region: drag;
 }
 
 .content {
     width: 100%;
-    height: calc(100vh - 46px);
+    flex: 1;
 }
 
-.contentContainer {
+#window {
     background-color: var(--bg);
-    border-radius: 0 0 var(--corner-radius) var(--corner-radius);
+    border-radius: var(--corner-radius);
     overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
+    margin: 7px;
+    transition: all 200ms;
+}
+
+#window.maximized {
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
 }
 
 .appname {
