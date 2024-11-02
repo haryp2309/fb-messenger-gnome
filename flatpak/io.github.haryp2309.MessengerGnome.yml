@@ -14,6 +14,7 @@ finish-args:
   - --socket=fallback-x11
   - --socket=pulseaudio
   - --share=network
+  - --env=ELECTRON_TRASH=gio
 build-options:
   append-path: /usr/lib/sdk/node20/bin
   env:
@@ -36,7 +37,7 @@ modules:
     subdir: main
     sources:
       - type: git
-        url: https://github.com/haryp2309/fb-messenger-gnome.git
+        url: https://github.com/haryp2309/messengergnome.git
         commit: a0bbd3c9d1c74114cda8b08f15ea384b1d05af0d
         dest: main
       - generated-sources.json
@@ -47,4 +48,4 @@ modules:
       - type: script
         dest-filename: run.sh
         commands:
-          - zypak-wrapper.sh /app/main/messenger-gnome-app --enable-features=UseOzonePlatform --ozone-platform=wayland "$@"
+          - zypak-wrapper.sh /app/main/messenger-gnome-app --enable-features=UseOzonePlatform --ozone-platform=auto "$@"
