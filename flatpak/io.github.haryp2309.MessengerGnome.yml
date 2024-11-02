@@ -38,7 +38,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/haryp2309/messengergnome.git
-        commit: a0bbd3c9d1c74114cda8b08f15ea384b1d05af0d
+        commit: a5ce0bee1194a196a972bbe6a58f2524da2991b0
         dest: main
       - generated-sources.json
       - type: file
