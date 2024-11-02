@@ -48,4 +48,4 @@ modules:
       - type: script
         dest-filename: run.sh
         commands:
-          - zypak-wrapper.sh /app/main/messenger-gnome-app --enable-features=UseOzonePlatform --ozone-platform=auto "$@"
+          - zypak-wrapper.sh /app/main/messenger-gnome-app --enable-features=UseOzonePlatform --ozone-platform-hint=auto "$@"
