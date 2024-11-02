@@ -1,4 +1,4 @@
-app-id: com.haryp.MessengerGnome
+app-id: io.github.haryp2309.MessengerGnome
 runtime: org.freedesktop.Platform
 runtime-version: "24.08"
 sdk: org.freedesktop.Sdk
@@ -11,6 +11,7 @@ separate-locales: false
 finish-args:
   - --share=ipc
   - --socket=wayland
+  - --socket=fallback-x11
   - --socket=pulseaudio
   - --share=network
 build-options:
@@ -40,7 +41,7 @@ modules:
         dest: main
       - generated-sources.json
       - type: file
-        path: com.haryp.MessengerGnome.desktop
+        path: io.github.haryp2309.MessengerGnome.desktop
       - type: file
         path: media/logo-512.png
       - type: script
