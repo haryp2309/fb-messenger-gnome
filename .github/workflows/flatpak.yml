@@ -20,6 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         arch: [x86_64, aarch64]
+        flatpak_id: [io.github.haryp2309.MessengerGnome]
     steps:
       - uses: actions/checkout@v4
       - name: Install Flatpak Builder and Flatpak
@@ -39,14 +40,14 @@ jobs:
           dnf -y install jq
           echo "RELEASE_TAG=$(jq -r '.version' package.json)" >> $GITHUB_ENV
       - name: Set output filename
-        run: echo "ARTIFACT_FILENAME=MessengerGnome-${{ matrix.arch }}-${{ env.RELEASE_TAG }}.flatpak" >> $GITHUB_ENV
+        run: echo "ARTIFACT_FILENAME=${{ matrix.flatpak_id }}-${{ matrix.arch }}-${{ env.RELEASE_TAG }}.flatpak" >> $GITHUB_ENV
       - name: Build flatpak
         run: |
           cd flatpak
           /bin/env flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-          /bin/env flatpak-builder build/ io.github.haryp2309.MessengerGnome.yml --install-deps-from=flathub --arch=${{ matrix.arch }}
+          /bin/env flatpak-builder build/ ${{ matrix.flatpak_id }}.yml --install-deps-from=flathub --arch=${{ matrix.arch }}
           /bin/env flatpak build-export export build
-          /bin/env flatpak build-bundle --arch=${{ matrix.arch }} export ${{ env.ARTIFACT_FILENAME }} io.github.haryp2309.MessengerGnome
+          /bin/env flatpak build-bundle --arch=${{ matrix.arch }} export ${{ env.ARTIFACT_FILENAME }} ${{ matrix.flatpak_id }}
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "flatpak/${{ env.ARTIFACT_FILENAME }}"
